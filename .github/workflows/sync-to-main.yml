@@ -1,0 +1,117 @@
+name: Sync Documentation to Main Repository
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  sync-docs:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      
+    steps:
+    - name: Checkout docs repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Git
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+
+    - name: Prepare sync content
+      run: |
+        # Create temporary directory for sync
+        mkdir -p /tmp/docs-sync
+        
+        # Copy documentation files
+        cp -r wiki /tmp/docs-sync/ || true
+        cp -r mcp /tmp/docs-sync/ || true
+        cp -r guides /tmp/docs-sync/ || true
+        cp -r images /tmp/docs-sync/ || true
+        
+        # Create metadata file
+        echo "SYNC_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" > /tmp/docs-sync/sync-metadata.txt
+        echo "SYNC_COMMIT=${{ github.sha }}" >> /tmp/docs-sync/sync-metadata.txt
+
+    - name: Checkout main repository
+      uses: actions/checkout@v4
+      with:
+        repository: ${{ secrets.MAIN_REPO }}
+        token: ${{ secrets.SYNC_TOKEN }}
+        path: main-repo
+        fetch-depth: 0
+
+    - name: Sync documentation
+      run: |
+        cd main-repo
+        
+        # Ensure docs directory exists
+        mkdir -p docs
+        
+        # Sync wiki content
+        if [ -d "/tmp/docs-sync/wiki" ]; then
+          rm -rf docs/wiki
+          cp -r /tmp/docs-sync/wiki docs/
+        fi
+        
+        # Sync MCP documentation
+        if [ -d "/tmp/docs-sync/mcp" ]; then
+          rm -rf docs/mcp
+          cp -r /tmp/docs-sync/mcp docs/
+        fi
+        
+        # Sync guides
+        if [ -d "/tmp/docs-sync/guides" ]; then
+          rm -rf docs/guides
+          cp -r /tmp/docs-sync/guides docs/
+        fi
+        
+        # Sync images
+        if [ -d "/tmp/docs-sync/images" ]; then
+          mkdir -p public/docs-images
+          cp -r /tmp/docs-sync/images/* public/docs-images/ || true
+        fi
+        
+        # Copy sync metadata
+        cp /tmp/docs-sync/sync-metadata.txt docs/
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.SYNC_TOKEN }}
+        path: main-repo
+        commit-message: "docs: sync documentation from docs repository"
+        branch: docs-sync-${{ github.sha }}
+        delete-branch: true
+        title: "[Auto] Sync Documentation Updates"
+        body: |
+          ## Documentation Sync
+          
+          This PR automatically syncs documentation changes from the docs repository.
+          
+          ### Changes
+          - Synced from commit: ${{ github.sha }}
+          - Timestamp: ${{ steps.timestamp.outputs.time }}
+          
+          ### Source
+          - Repository: ${{ github.repository }}
+          - Branch: ${{ github.ref_name }}
+          - Commit: ${{ github.event.head_commit.message }}
+          
+          ---
+          *This is an automated pull request. Please review the changes before merging.*
+        labels: |
+          documentation
+          automated
+        reviewers: ${{ secrets.REVIEWERS }}
+
+    - name: Send notification
+      if: success()
+      run: |
+        echo "Documentation sync completed successfully"
+        # Add webhook or notification logic here if needed
