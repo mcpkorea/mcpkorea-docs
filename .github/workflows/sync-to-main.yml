@@ -32,7 +32,10 @@ jobs:
         cp -r wiki /tmp/docs-sync/ || true
         cp -r mcp /tmp/docs-sync/ || true
         cp -r guides /tmp/docs-sync/ || true
-        cp -r images /tmp/docs-sync/ || true
+        # Only copy images if directory exists
+        if [ -d "images" ]; then
+          cp -r images /tmp/docs-sync/
+        fi
         
         # Create metadata file
         echo "SYNC_TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" > /tmp/docs-sync/sync-metadata.txt
@@ -72,9 +75,9 @@ jobs:
         fi
         
         # Sync images
-        if [ -d "/tmp/docs-sync/images" ]; then
+        if [ -d "/tmp/docs-sync/images" ] && [ "$(ls -A /tmp/docs-sync/images)" ]; then
           mkdir -p public/docs-images
-          cp -r /tmp/docs-sync/images/* public/docs-images/ || true
+          cp -r /tmp/docs-sync/images/* public/docs-images/
         fi
         
         # Copy sync metadata
@@ -108,7 +111,6 @@ jobs:
         labels: |
           documentation
           automated
-        reviewers: ${{ secrets.REVIEWERS }}
 
     - name: Send notification
       if: success()
