@@ -1,47 +1,47 @@
-# Contributing to MCP Korea Documentation
+# MCP Korea 문서화에 기여하기
 
-Thank you for your interest in contributing to MCP Korea documentation! This guide will help you understand how to contribute effectively.
+MCP Korea 문서화에 기여해주셔서 감사합니다! 이 가이드는 효과적으로 기여하는 방법을 이해하는 데 도움이 될 것입니다.
 
-## 📋 Table of Contents
+## 📋 목차
 
-- [Getting Started](#getting-started)
-- [Documentation Standards](#documentation-standards)
-- [Submission Process](#submission-process)
-- [Style Guide](#style-guide)
-- [Review Process](#review-process)
+- [시작하기](#시작하기)
+- [문서화 표준](#문서화-표준)
+- [제출 과정](#제출-과정)
+- [스타일 가이드](#스타일-가이드)
+- [검토 과정](#검토-과정)
 
-## 🚀 Getting Started
+## 🚀 시작하기
 
-1. Fork this repository
-2. Create a new branch for your documentation (`git checkout -b docs/your-topic`)
-3. Write your documentation following our standards
-4. Submit a pull request
+1. 이 저장소를 fork하세요
+2. 문서화를 위한 새 브랜치를 생성하세요 (`git checkout -b docs/your-topic`)
+3. 우리의 표준에 따라 문서를 작성하세요
+4. Pull Request를 제출하세요
 
-## 📝 Documentation Standards
+## 📝 문서화 표준
 
-### Wiki Articles (`/wiki/`)
+### 위키 문서 (`/wiki/`)
 
-All wiki articles must include frontmatter:
+모든 위키 문서는 frontmatter를 포함해야 합니다:
 
 ```yaml
 ---
-title: "Article Title in Korean"
-description: "Brief description in Korean"
-tags: ["tag1", "tag2"]
-author: "Your Name"
+title: "한국어 문서 제목"
+description: "한국어 간단한 설명"
+tags: ["태그1", "태그2"]
+author: "작성자 이름"
 date: "YYYY-MM-DD"
 ---
 ```
 
-### MCP Documentation (`/mcp/`)
+### MCP 문서 (`/mcp/`)
 
-Each MCP should have its own directory with:
-- `README.md` - Overview and installation
-- `configuration.md` - Configuration options
-- `examples.md` - Usage examples
-- `api.md` - API reference (if applicable)
+각 MCP는 다음과 같은 자체 디렉토리를 가져야 합니다:
+- `README.md` - 개요 및 설치
+- `configuration.md` - 구성 옵션
+- `examples.md` - 사용 예제
+- `api.md` - API 참조 (해당하는 경우)
 
-Example structure:
+예제 구조:
 ```
 /mcp/mcp-name/
 ├── README.md
@@ -50,40 +50,40 @@ Example structure:
 └── api.md
 ```
 
-### Guides (`/guides/`)
+### 가이드 (`/guides/`)
 
-Guides should be practical tutorials with:
-- Clear objectives
-- Prerequisites
-- Step-by-step instructions
-- Code examples
-- Troubleshooting section
+가이드는 다음을 포함한 실용적인 튜토리얼이어야 합니다:
+- 명확한 목표
+- 필수 조건
+- 단계별 지침
+- 코드 예제
+- 문제 해결 섹션
 
-## 📤 Submission Process
+## 📤 제출 과정
 
-1. **Check Existing Documentation**: Ensure your topic isn't already covered
-2. **Follow Templates**: Use provided templates when available
-3. **Test Your Examples**: All code examples must be tested and working
-4. **Include Images**: Add relevant screenshots to `/images/` directory
-5. **Submit PR**: Create a pull request with a clear description
+1. **기존 문서 확인**: 해당 주제가 이미 다뤄지지 않았는지 확인하세요
+2. **템플릿 따르기**: 사용 가능한 템플릿이 있다면 사용하세요
+3. **예제 테스트**: 모든 코드 예제는 테스트되고 동작하는 것이어야 합니다
+4. **이미지 포함**: 관련 스크린샷을 `/images/` 디렉토리에 추가하세요
+5. **PR 제출**: 명확한 설명과 함께 Pull Request를 생성하세요
 
-## 📖 Style Guide
+## 📖 스타일 가이드
 
-### Language
-- Primary language: Korean
-- Technical terms: Use English terms commonly used in Korean tech community
-- Code comments: English
+### 언어
+- 주 언어: 한국어
+- 기술 용어: 한국 기술 커뮤니티에서 일반적으로 사용하는 영어 용어 사용
+- 코드 주석: 영어
 
-### Formatting
-- Use GitHub Flavored Markdown
-- Headers: Use proper hierarchy (H1 for title, H2 for main sections)
-- Code blocks: Specify language for syntax highlighting
-- Links: Use relative links for internal documentation
+### 서식
+- GitHub Flavored Markdown 사용
+- 헤더: 적절한 계층 구조 사용 (제목은 H1, 주요 섹션은 H2)
+- 코드 블록: 구문 강조를 위해 언어 지정
+- 링크: 내부 문서에는 상대 링크 사용
 
-### Code Examples
+### 코드 예제
 
 ```javascript
-// Good example - includes context and explanation
+// 좋은 예제 - 컨텍스트와 설명을 포함
 const mcp = new MCP({
   name: 'example-mcp',
   version: '1.0.0'
@@ -93,41 +93,41 @@ const mcp = new MCP({
 await mcp.connect();
 ```
 
-### Images
-- Format: PNG or WebP preferred
-- Naming: `kebab-case-description.png`
-- Location: `/images/[category]/`
-- Alt text: Required for all images
+### 이미지
+- 형식: PNG 또는 WebP 선호
+- 명명: `kebab-case-description.png`
+- 위치: `/images/[category]/`
+- Alt 텍스트: 모든 이미지에 필수
 
-## 🔍 Review Process
+## 🔍 검토 과정
 
-1. **Initial Review**: Maintainers check for completeness and standards compliance
-2. **Technical Review**: Verify technical accuracy and test examples
-3. **Language Review**: Check Korean language quality and clarity
-4. **Final Approval**: Merge to main branch and auto-sync to website
+1. **초기 검토**: 메인테이너가 완성도와 표준 준수를 확인
+2. **기술 검토**: 기술적 정확성을 확인하고 예제를 테스트
+3. **언어 검토**: 한국어 품질과 명확성을 확인
+4. **최종 승인**: 메인 브랜치에 병합하고 웹사이트로 자동 동기화
 
-## ✅ Checklist
+## ✅ 체크리스트
 
-Before submitting your PR, ensure:
+PR을 제출하기 전에 다음을 확인하세요:
 
-- [ ] Documentation follows the style guide
-- [ ] All code examples are tested
-- [ ] Images are properly formatted and placed
-- [ ] Frontmatter is complete and accurate
-- [ ] No broken links
-- [ ] Korean language is clear and professional
+- [ ] 문서가 스타일 가이드를 따름
+- [ ] 모든 코드 예제가 테스트됨
+- [ ] 이미지가 적절하게 포맷되고 배치됨
+- [ ] Frontmatter가 완전하고 정확함
+- [ ] 깨진 링크가 없음
+- [ ] 한국어가 명확하고 전문적임
 
-## 🤝 Getting Help
+## 🤝 도움 받기
 
-If you need help:
-- Check existing documentation for examples
-- Open an issue for questions
-- Join our community discussions
+도움이 필요하다면:
+- 예제를 위해 기존 문서를 확인하세요
+- 질문이 있으면 이슈를 열어주세요
+- 커뮤니티 토론에 참여하세요
 
-## 📜 License
+## 📜 라이센스
 
-By contributing, you agree that your contributions will be licensed under the same license as the main project.
+기여함으로써, 귀하의 기여가 메인 프로젝트와 동일한 라이센스 하에 라이센스될 것에 동의합니다.
 
 ---
 
-Thank you for helping make MCP Korea documentation better! 🎉
+MCP Korea 문서화를 더 좋게 만드는 데 도움을 주셔서 감사합니다! 🎉
