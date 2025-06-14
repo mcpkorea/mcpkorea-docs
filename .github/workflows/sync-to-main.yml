@@ -75,9 +75,10 @@ jobs:
         fi
         
         # Sync images
-        if [ -d "/tmp/docs-sync/images" ] && [ "$(ls -A /tmp/docs-sync/images)" ]; then
+        if [ -d "/tmp/docs-sync/images" ]; then
           mkdir -p public/docs-images
-          cp -r /tmp/docs-sync/images/* public/docs-images/
+          # Use find to safely copy files if they exist
+          find /tmp/docs-sync/images -type f -exec cp {} public/docs-images/ \; 2>/dev/null || true
         fi
         
         # Copy sync metadata
@@ -99,7 +100,6 @@ jobs:
           
           ### Changes
           - Synced from commit: ${{ github.sha }}
-          - Timestamp: ${{ steps.timestamp.outputs.time }}
           
           ### Source
           - Repository: ${{ github.repository }}
